@@ -45,6 +45,35 @@ systemctl restart ntpd.service
 systemctl enable ntpd.service
 
 
-...
+###... Need to reconstruct missing section###
+
+
+service network restart
+
+#AD using SSSD, Samba, & Kerberos
+service realmd start
+systemctl enable realmd
+echo "[sssd]" >> /etc/sssd/sssd.conf
+echo "services = nss, pam" >> /etc/sssd/sssd.conf
+echo "domains = ${DOMAIN}" >> /etc/sssd/sssd.conf
+echo "" >> /etc/sssd.sssd.conf
+echo "[domain/${REALM}]" >> etc/sssd/sssd.conf
+echo "id_provider = ad" >> etc/sssd/sssd.conf
+echo "auth_provider = ad" >> etc/sssd/sssd.conf
+echo "access_provider = ad" >> etc/sssd/sssd.conf
+echo "chpass_provider = ad" >> etc/sssd/sssd.conf
+echo "override_homedir = /home/%d/%u" >> etc/sssd/sssd.conf
+echo "" >> etc/sssd/sssd.conf
+echo "ad_server = ${DC}" >> etc/sssd/sssd.conf 
+echo "" >> etc/sssd/sssd.conf
+chmod 600 etc/sssd/sssd.conf
+chown root etc/sssd/sssd.conf
+sed -i "s/EXAMPLE.COM/${REALM}/g" /var/kerberos/krb5kdc/kadm5.acl
+sed -i "s/EXAMPLE.COM/${REALM}/g" /var/kerberos/krb5kdc/kdc.conf
+sed -i "s/EXAMPLE.COM/${REALM}/g" /etc/krb5.conf
+sed -i "s/example.com/${DOMAIN}/g" /var/krb5.conf
+sed -i "s/kerberos/${HOST}/g" /etc/krb5.conf
+sed -i 's/#/ /g' /etc/krb5.conf
+kdb5_util create -s -r ${REALM}
 
 
