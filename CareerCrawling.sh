@@ -1,11 +1,11 @@
 #!/bin/bash
 
-################Pulls list of websites and assigns it to variable##############
+			################Pulls list of websites and assigns it to variable##############
 for i in $(cat list.txt)
 do
 	echo $i
 
-################This line is commented out to keep from spamming################
+		################Following line can commented out to keep from spamming during testing################
 	wget --spider ${i}/careers -a testing1 
 	if grep -qE "${i}.*404" testing1
 	then
@@ -13,6 +13,7 @@ do
 	else	
 		grep $i testing1 | grep -E "careers" | tail -n 1 
 	fi
+	
 	wget --spider ${i}/jobs -a testing1
 	if grep -qE "${i}.*404" testing1
 	then
