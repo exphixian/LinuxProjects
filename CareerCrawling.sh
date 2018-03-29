@@ -1,3 +1,6 @@
+#This script will pull a list of websites from a file and check to see if there is a careers or jobs page located somewhere on the 
+#site.  Spider is used in order to determine where exactly instead of seaching for just website/careers
+
 #!/bin/bash
 
 			################Pulls from list of websites and assigns it to variable##############
