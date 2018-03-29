@@ -1,8 +1,8 @@
+### This script was created for use in CentOS ###
 #!/bin/bash
 
 #ASSIGNING VARIABLES
 interface=`ifconfig | awk '{print substr($1,1, length ($1)-1)}' | head -1
-echo "For the Deployment:"
 echo "Please enter the HOSTNAME of this device:"
 read HOST
 echo "Please enter the IP address for this device:"
@@ -19,7 +19,9 @@ echo "NETWORKING=yes" >> /etc/sysconfig/network && echo "GATEWAY=${GATEWAY}" >> 
 cd /etc/sysconfig/network-scripts/
 mv ifcfg-${interface} ifcfg-${interface}.bak
 echo "DEVICE=${interface}"> ifcfg-${interface} && echo "BOOTPROTO=static" >> ifcfg-${interface} && echo "DHCPCLASS=" >> ifcfg-${interface}
-### These IP addresses will need to be changed ###
+echo "IPADDR=${IP}" >> ifcfg-${interface} && echo "NETMASK=${NETMASK}" >> ifcfg-${interface} && echo "GATEWAY=${GATEWAY}" >> ifcfg-${interface}
+echo 'ONBOOT="yes"' >> ifcfg-${interface}
+### These DNS addresses will need to be changed ###
 echo "DNS1=000.000.000.000" >> ifcfg-${interface}
 echo "DNS2=000.000.000.000" >> ifcfg-${interface}
 echo "nameserver ${NS}" > /etc/resolv.conf
