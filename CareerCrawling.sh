@@ -1,6 +1,6 @@
 #!/bin/bash
 
-			################Pulls list of websites and assigns it to variable##############
+			################Pulls from list of websites and assigns it to variable##############
 for i in $(cat list.txt)
 do
 	echo $i
