@@ -1,0 +1,3 @@
+### find duplicates in a list:
+sort <file> | uniq -c | grep -v 1
+
